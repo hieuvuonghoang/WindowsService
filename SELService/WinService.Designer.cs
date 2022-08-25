@@ -1,7 +1,7 @@
 ﻿
 namespace SELService
 {
-    partial class WinService
+    partial class SELService
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,8 +29,11 @@ namespace SELService
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Window Service";
+            // 
+            // SELService
+            // 
+            this.ServiceName = "SEL Service";
+
         }
 
         #endregion

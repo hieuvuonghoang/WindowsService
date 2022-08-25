@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace SELService
 {
-    public partial class WinService : ServiceBase
+    public partial class SELService : ServiceBase
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly AppConfigs _appConfigs;
         private Timer _timer = null;
 
-        public WinService()
+        public SELService()
         {
             InitializeComponent();
             try
             {
-                _appConfigs = ConfigurationManager.GetSection("AppConfigs") as SELService.AppConfigs;
+                _appConfigs = ConfigurationManager.GetSection("AppConfigs") as global::SELService.AppConfigs;
                 if (_appConfigs == null)
                 {
                     throw new Exception("App Config are not defined");

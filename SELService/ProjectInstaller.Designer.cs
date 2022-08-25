@@ -41,9 +41,9 @@ namespace SELService
             // 
             // serviceInstaller
             // 
-            this.serviceInstaller.Description = "WinService";
-            this.serviceInstaller.DisplayName = "Win Service";
-            this.serviceInstaller.ServiceName = "WinService";
+            this.serviceInstaller.Description = "SEL Service";
+            this.serviceInstaller.DisplayName = "SEL Service";
+            this.serviceInstaller.ServiceName = "SEL Service";
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

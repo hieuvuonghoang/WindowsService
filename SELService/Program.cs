@@ -18,7 +18,7 @@ namespace SELService
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new WinService()
+                new SELService()
             };
             ServiceBase.Run(ServicesToRun);
         }
