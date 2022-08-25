@@ -5,7 +5,7 @@ using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WindowsService
+namespace SELService
 {
     public partial class WinService : ServiceBase
     {
@@ -18,7 +18,7 @@ namespace WindowsService
             InitializeComponent();
             try
             {
-                _appConfigs = ConfigurationManager.GetSection("AppConfigs") as WindowsService.AppConfigs;
+                _appConfigs = ConfigurationManager.GetSection("AppConfigs") as SELService.AppConfigs;
                 if (_appConfigs == null)
                 {
                     throw new Exception("App Config are not defined");

@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:WindowServiceSetup"
+"ProjectName" = "8:SELServiceSetup"
 "LanguageId" = "3:1033"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1033"
@@ -46,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FB37398DA1E6436868DA86D2BBA2B586"
+        "OwnerKey" = "8:_E5C9CDAA6DBD4D6696BE476D2FB044A9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -64,13 +64,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E9D07EB4B1A066B3E3DFF3624AE8237B"
+        "OwnerKey" = "8:_FB37398DA1E6436868DA86D2BBA2B586"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E5C9CDAA6DBD4D6696BE476D2FB044A9"
+        "OwnerKey" = "8:_E9D07EB4B1A066B3E3DFF3624AE8237B"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -81,7 +81,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\WindowServiceSetup.msi"
+        "OutputFilename" = "8:Debug\\SELServiceSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -91,13 +91,21 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\WindowServiceSetup.msi"
+        "OutputFilename" = "8:Release\\SELServiceSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -107,6 +115,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -115,7 +131,7 @@
         {
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_316D9A4B32F04EF1A73D96B5A8AC79DB"
             {
-            "Name" = "8:Primary output from WindowsService (Active)"
+            "Name" = "8:Primary output from SELService (Active)"
             "Condition" = "8:"
             "Object" = "8:_E5C9CDAA6DBD4D6696BE476D2FB044A9"
             "FileType" = "3:2"
@@ -129,7 +145,7 @@
             }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_3CE186B5FD3F45008644530B464D2F0A"
             {
-            "Name" = "8:Primary output from WindowsService (Active)"
+            "Name" = "8:Primary output from SELService (Active)"
             "Condition" = "8:"
             "Object" = "8:_E5C9CDAA6DBD4D6696BE476D2FB044A9"
             "FileType" = "3:2"
@@ -143,7 +159,7 @@
             }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_6A0544D2F3B94911B2D3273A45424671"
             {
-            "Name" = "8:Primary output from WindowsService (Active)"
+            "Name" = "8:Primary output from SELService (Active)"
             "Condition" = "8:"
             "Object" = "8:_E5C9CDAA6DBD4D6696BE476D2FB044A9"
             "FileType" = "3:2"
@@ -157,7 +173,7 @@
             }
             "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_C336467F005D4CC9BA14FB789D842E4B"
             {
-            "Name" = "8:Primary output from WindowsService (Active)"
+            "Name" = "8:Primary output from SELService (Active)"
             "Condition" = "8:"
             "Object" = "8:_E5C9CDAA6DBD4D6696BE476D2FB044A9"
             "FileType" = "3:2"
@@ -371,7 +387,7 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:WindowServiceSetup"
+        "ProductName" = "8:SEL Service"
         "ProductCode" = "8:{DF0C4499-0D28-4CC3-88D5-BD0E3E99D2A2}"
         "PackageCode" = "8:{B832DD50-AD3B-48DF-B6D8-7EED4ECAB597}"
         "UpgradeCode" = "8:{FF251575-9CAC-46E3-BA13-C9311D661774}"
@@ -384,11 +400,11 @@
         "Manufacturer" = "8:SV Tech"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:WindowServiceSetup"
+        "Title" = "8:SEL Service"
         "Subject" = "8:"
         "ARPCONTACT" = "8:SV Tech"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:"
+        "ARPCOMMENTS" = "8:SEL Service"
         "ARPURLINFOABOUT" = "8:"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
@@ -922,7 +938,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E5C9CDAA6DBD4D6696BE476D2FB044A9"
             {
-            "SourcePath" = "8:..\\WindowsService\\obj\\Debug\\WindowsService.exe"
+            "SourcePath" = "8:..\\SELService\\obj\\Debug\\SELService.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_09792A163399467991906B98B17A4952"

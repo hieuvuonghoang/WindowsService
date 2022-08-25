@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsService
+namespace SELService
 {
     public class AppConfigs : ConfigurationSection
     {

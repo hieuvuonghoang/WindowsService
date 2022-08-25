@@ -1,5 +1,5 @@
 ﻿
-namespace WindowsService
+namespace SELService
 {
     partial class ProjectInstaller
     {
