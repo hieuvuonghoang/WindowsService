@@ -33,82 +33,8 @@ namespace SELService
         protected override void OnStart(string[] args)
         {
             _logger.Info($"OnStart: {DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy")}");
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
-        }
-
-        private void DoWork(object state)
-        {
-            try
-            {
-                var maxId = ReadMaxId();
-                _logger.Info($"{maxId}");
-                maxId++;
-                WriteMaxId(maxId);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex.ToString(), ex);
-                throw ex;
-            }
-        }
-
-        private int ReadMaxId()
-        {
-            var maxId = 0;
-            try
-            {
-                var dir = _appConfigs.FileConfigs.Dir;
-                var fileName = _appConfigs.FileConfigs.FileName;
-                var strMaxIdFileTempPath = Path.Combine(Path.GetTempPath(), dir, fileName);
-                var str = "";
-                if (File.Exists(strMaxIdFileTempPath))
-                {
-                    str = File.ReadAllText(strMaxIdFileTempPath);
-                }
-                else
-                {
-                    var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-                    var strWorkPath = Path.GetDirectoryName(strExeFilePath);
-                    var strMaxIdFilePath = Path.Combine(strWorkPath, fileName);
-                    str = File.ReadAllText(strMaxIdFilePath);
-                }
-                try
-                {
-                    maxId = int.Parse(str);
-                }
-                catch (FormatException ex)
-                {
-                    maxId = 0;
-                    _logger.Warn(ex.ToString(), ex);
-                }
-            }
-            catch (Exception ex)
-            {
-                //_logger.Error(ex.ToString(), ex);
-                throw ex;
-            }
-            return maxId;
-        }
-
-        private void WriteMaxId(int maxId)
-        {
-            try
-            {
-                var dir = _appConfigs.FileConfigs.Dir;
-                var fileName = _appConfigs.FileConfigs.FileName;
-                var strMaxIdFileTempPath = Path.Combine(Path.GetTempPath(), dir, fileName);
-                var pathDir = Path.Combine(Path.GetTempPath(), dir);
-                if (!Directory.Exists(pathDir))
-                {
-                    Directory.CreateDirectory(pathDir);
-                }
-                File.WriteAllText(strMaxIdFileTempPath, $"{maxId}");
-            }
-            catch (Exception ex)
-            {
-                //_logger.Error(ex.ToString(), ex);
-                throw ex;
-            }
+            var worker = new Worker(_appConfigs);
+            _timer = new Timer(worker.RunAsync, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
         }
 
         protected override void OnStop()

@@ -130,6 +130,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -396,8 +404,8 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SEL Service"
-        "ProductCode" = "8:{D67D85F8-445C-43D1-AFC9-F4C341205163}"
-        "PackageCode" = "8:{2E06ADE2-525C-4AF4-9FAF-A5FFA60C1F04}"
+        "ProductCode" = "8:{6C80D640-1D36-4A5E-AF9B-ADAB630D299D}"
+        "PackageCode" = "8:{6AE558C2-BF7D-4F12-8EC2-12498B4E4016}"
         "UpgradeCode" = "8:{175D2529-BAC8-40B8-85C9-627004D549D6}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
