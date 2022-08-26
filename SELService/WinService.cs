@@ -18,10 +18,10 @@ namespace SELService
             InitializeComponent();
             try
             {
-                _appConfigs = ConfigurationManager.GetSection("AppConfigs") as global::SELService.AppConfigs;
+                _appConfigs = ConfigurationManager.GetSection("AppConfigs") as AppConfigs;
                 if (_appConfigs == null)
                 {
-                    throw new Exception("App Config are not defined");
+                    throw new ConfigurationErrorsException("AppConfigs are not defined");
                 }
             }
             catch (Exception ex)
@@ -34,7 +34,7 @@ namespace SELService
         {
             _logger.Info($"OnStart: {DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy")}");
             var worker = new Worker(_appConfigs);
-            _timer = new Timer(worker.RunAsync, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+            _timer = new Timer(worker.Run, null, TimeSpan.Zero, TimeSpan.FromSeconds(_appConfigs.ServiceConfigs.RefreshTime));
         }
 
         protected override void OnStop()
