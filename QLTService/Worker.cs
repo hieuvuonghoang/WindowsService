@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SELService
+namespace QLTService
 {
     public class Worker
     {
@@ -25,7 +25,7 @@ namespace SELService
         {
             _appConfigs = appConfigs;
 
-            var unitTest = ConfigurationManager.ConnectionStrings["ATS_DB"];
+            var unitTest = ConfigurationManager.ConnectionStrings["QLT_DB"];
 
             if (unitTest != null && !string.IsNullOrEmpty(unitTest.ConnectionString))
             {
@@ -38,62 +38,46 @@ namespace SELService
 
             _querySQLGetDataForPage =
                         @"SELECT 
-                        a.Name 
-                        ,e.TriggerTime 
-                        ,e.Id 
-                        ,e.Distance_1 
-                        ,e.Distance_2 
-                        ,e.LineId 
-                        ,f.Name as Line1Name 
-                        ,g.Name as Line2Name 
-                        ,e.Target
-                        ,d.Name as DeviceName
-                        ,i.StationName as TramA1
-                        ,j.StationName as TramB1
-                        ,k.StationName as TramA2
-                        ,l.StationName as TramB2
-                        FROM [ATS_FL].[dbo].[Stations] a 
-                        INNER JOIN [ATS_FL].[dbo].[Yards] b ON a.Id = b.StationId 
-                        INNER JOIN [ATS_FL].[dbo].[Bays] c ON b.Id = c.YardId 
-                        INNER JOIN [ATS_FL].[dbo].[Devices] d ON c.Id = d.BayId 
-                        INNER JOIN [ATS_FL].[dbo].[FaultResults] e ON d.Id = e.DeviceId 
-                        LEFT JOIN [ATS_FL].[dbo].[Lines] f ON d.Id = f.Device_1 
-                        LEFT JOIN [ATS_FL].[dbo].[Lines] g ON d.Id = g.Device_2 
-                        LEFT JOIN [ATS_FL].[dbo].[Devices] h ON h.Name = d.Name
-                        LEFT JOIN [ATS_FL].[dbo].StationDevicesView i ON i.Id = f.Device_1
-                        LEFT JOIN [ATS_FL].[dbo].StationDevicesView j ON j.Id = f.Device_2
-                        LEFT JOIN [ATS_FL].[dbo].StationDevicesView k ON k.Id = g.Device_1
-                        LEFT JOIN [ATS_FL].[dbo].StationDevicesView l ON l.Id = g.Device_2
-                        WHERE h.KinkeyStationName IS NULL AND (e.Distance_1 > 0 OR e.Target LIKE 'INST%') AND e.Id > {0} AND e.Id <= {1} 
-                        ORDER BY e.TriggerTime 
+	                    FLResults.ResultID, 
+	                    FLCircuits.CircuitName, 
+	                    FLResults.ResultTimeStampLocal, 
+	                    FLResults.ResultTimeStampUS, 
+	                    c.DeviceName as DeviceNameX, 
+	                    d.DeviceName as DeviceNameY, 
+	                    FLResults.DTFX, 
+	                    FLResults.DTFY 
+                        FROM FLResults 
+                        INNER JOIN FLCircuits ON FLResults.CircuitID = FLCircuits.CircuitId 
+                        LEFT JOIN Feeders a ON FLResults.FeederX = a.FeederId 
+                        LEFT JOIN Feeders b ON FLResults.FeederY = b.FeederId 
+                        LEFT JOIN Device c ON a.DeviceId = c.DeviceId 
+                        LEFT JOIN Device d ON b.DeviceId = d.DeviceId 
+                        WHERE FLResults.ResultID > {0} AND FLResults.ResultID <= {1} AND FLResults.DTFX > 0 AND FLResults.DTFY > 0 
+                        ORDER BY FLResults.ResultID 
                         OFFSET {2} ROWS 
-                        FETCH FIRST {3} ROWS ONLY";
+                        FETCH FIRST {3} ROWS ONLY ";
 
             _querySQLGetMaxTriggerTimeInResult =
                         @"SELECT 
-                        MAX(e.Id) 
-                        FROM [ATS_FL].[dbo].[Stations] a 
-                        INNER JOIN [ATS_FL].[dbo].[Yards] b ON a.Id = b.StationId 
-                        INNER JOIN [ATS_FL].[dbo].[Bays] c ON b.Id = c.YardId 
-                        INNER JOIN [ATS_FL].[dbo].[Devices] d ON c.Id = d.BayId 
-                        INNER JOIN [ATS_FL].[dbo].[FaultResults] e ON d.Id = e.DeviceId 
-                        LEFT JOIN [ATS_FL].[dbo].[Lines] f ON d.Id = f.Device_1 
-                        LEFT JOIN [ATS_FL].[dbo].[Lines] g ON d.Id = g.Device_2 
-                        LEFT JOIN [ATS_FL].[dbo].[Devices] h ON h.Name = d.Name 
-                        WHERE h.KinkeyStationName IS NULL AND (e.Distance_1 > 0 OR e.Target LIKE 'INST%') AND e.Id > {0}";
+	                    MAX(FLResults.ResultID) 
+                        FROM FLResults 
+                        INNER JOIN FLCircuits ON FLResults.CircuitID = FLCircuits.CircuitId 
+                        LEFT JOIN Feeders a ON FLResults.FeederX = a.FeederId 
+                        LEFT JOIN Feeders b ON FLResults.FeederY = b.FeederId 
+                        LEFT JOIN Device c ON a.DeviceId = c.DeviceId 
+                        LEFT JOIN Device d ON b.DeviceId = d.DeviceId 
+                        WHERE FLResults.ResultID > {0} AND FLResults.DTFX > 0 AND FLResults.DTFY > 0 ";
 
             _querySQLGetNRowInResult =
                         @"SELECT 
-                        COUNT(e.Id) 
-                        FROM [ATS_FL].[dbo].[Stations] a 
-                        INNER JOIN [ATS_FL].[dbo].[Yards] b ON a.Id = b.StationId 
-                        INNER JOIN [ATS_FL].[dbo].[Bays] c ON b.Id = c.YardId 
-                        INNER JOIN [ATS_FL].[dbo].[Devices] d ON c.Id = d.BayId 
-                        INNER JOIN [ATS_FL].[dbo].[FaultResults] e ON d.Id = e.DeviceId 
-                        LEFT JOIN [ATS_FL].[dbo].[Lines] f ON d.Id = f.Device_1 
-                        LEFT JOIN [ATS_FL].[dbo].[Lines] g ON d.Id = g.Device_2 
-                        LEFT JOIN [ATS_FL].[dbo].[Devices] h ON h.Name = d.Name 
-                        WHERE h.KinkeyStationName IS NULL AND (e.Distance_1 > 0 OR e.Target LIKE 'INST%') AND e.Id > {0} AND e.Id <= {1}";
+	                    COUNT(FLResults.ResultID) 
+                        FROM FLResults 
+                        INNER JOIN FLCircuits ON FLResults.CircuitID = FLCircuits.CircuitId 
+                        LEFT JOIN Feeders a ON FLResults.FeederX = a.FeederId 
+                        LEFT JOIN Feeders b ON FLResults.FeederY = b.FeederId 
+                        LEFT JOIN Device c ON a.DeviceId = c.DeviceId 
+                        LEFT JOIN Device d ON b.DeviceId = d.DeviceId 
+                        WHERE FLResults.ResultID > {0} AND FLResults.ResultID <= {1} AND FLResults.DTFX > 0 AND FLResults.DTFY > 0 ";
         }
 
         public void Run(object state)
@@ -102,7 +86,7 @@ namespace SELService
             {
                 var maxId = ReadMaxId();
                 var nRowInPage = _appConfigs.PageConfigs.MaxRowInPage;
-                int maxIDInResult = 0;
+                long maxIDInResult = 0;
                 using(var connection = new SqlConnection(_connectionString))
                 {
                     maxIDInResult = GetMaxIdInResult(maxId, connection);
@@ -114,11 +98,16 @@ namespace SELService
                         {
                             nPage++;
                         }
+
                         var eventView2ss = new List<List<EventView>>();
                         for (var i = 1; i <= nPage; i++)
                         {
-                            eventView2ss.Add(GetDataForPage(maxId, maxIDInResult, i, nRowInPage, connection));
+                            var offset = (i - 1) * nRowInPage;
+                            var fetch = nRowInPage;
+                            var eventView2s = GetDataForPage(maxId, maxIDInResult, offset, fetch, connection);
+                            eventView2ss.Add(MapFLResultToSuCoAttributes(eventView2s));
                         }
+
                         if (eventView2ss.Count != 0)
                         {
                             foreach (var eventView2s in eventView2ss)
@@ -154,13 +143,57 @@ namespace SELService
         }
 
         /// <summary>
+        /// Mapping dữ liệu FLResult sang SuCoAttribute.
+        /// </summary>
+        /// <param name="fLResults"></param>
+        /// <returns></returns>
+        private List<EventView> MapFLResultToSuCoAttributes(List<QualitrolFail> qualitrolFails)
+        {
+            var rets = new List<EventView>();
+            try
+            {
+                foreach (var qualitrolFail in qualitrolFails)
+                {
+                    var eventView2 = new EventView();
+                    eventView2.Id = qualitrolFail.ResultID;
+                    eventView2.StartTime = qualitrolFail.DateTimeLocal;
+                    eventView2.LineName = qualitrolFail.CircuitName;
+                    if (qualitrolFail.DTFX < qualitrolFail.DTFY)
+                    {
+                        eventView2.StationName = qualitrolFail.DeviceNameX;
+                        eventView2.Length = qualitrolFail.DTFX;
+                        eventView2.DeviceName = qualitrolFail.DeviceNameX;
+
+                        eventView2.LengthB = qualitrolFail.DTFY;
+                        eventView2.StationNameB = qualitrolFail.DeviceNameY;
+                    }
+                    else
+                    {
+                        eventView2.StationName = qualitrolFail.DeviceNameY;
+                        eventView2.Length = qualitrolFail.DTFY;
+                        eventView2.DeviceName = qualitrolFail.DeviceNameY;
+
+                        eventView2.LengthB = qualitrolFail.DTFX;
+                        eventView2.StationNameB = qualitrolFail.DeviceNameX;
+                    }
+                    rets.Add(eventView2);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return rets;
+        }
+
+        /// <summary>
         /// Get maxID in result
         /// </summary>
         /// <param name="maxID">maxID hiện tại</param>
         /// <returns></returns>
-        private int GetMaxIdInResult(int maxId, SqlConnection connection)
+        private long GetMaxIdInResult(long maxId, SqlConnection connection)
         {
-            var ret = 0;
+            long ret = 0;
             try
             {
                 using (var command = new SqlCommand(string.Format(_querySQLGetMaxTriggerTimeInResult, maxId), connection))
@@ -172,7 +205,7 @@ namespace SELService
                         {
                             if (!result.IsDBNull(0))
                             {
-                                ret = result.GetInt32(0);
+                                ret = result.GetInt64(0);
                             }
                         }
                     }
@@ -191,7 +224,7 @@ namespace SELService
         /// <param name="maxId">maxID hiện tại</param>
         /// <param name="maxIdInResult">maxID trong kết quả truy vấn</param>
         /// <returns></returns>
-        private int GetNRowInResult(int maxId, int maxIdInResult, SqlConnection connection)
+        private int GetNRowInResult(long maxId, long maxIdInResult, SqlConnection connection)
         {
             var ret = 0;
             using (var command = new SqlCommand(string.Format(_querySQLGetNRowInResult, maxId, maxIdInResult), connection))
@@ -219,9 +252,9 @@ namespace SELService
         /// <param name="pageNum">trang hiện tại</param>
         /// <param name="nRowInPage">số bản ghi trên một trang</param>
         /// <returns></returns>
-        private List<EventView> GetDataForPage(int maxId, int maxIdInResult, int pageNum, int nRowInPage, SqlConnection connection)
+        private List<QualitrolFail> GetDataForPage(long maxId, long maxIdInResult, int pageNum, int nRowInPage, SqlConnection connection)
         {
-            var rets = new List<EventView>();
+            var qualitrolFails = new List<QualitrolFail>();
             try
             {
 
@@ -234,70 +267,16 @@ namespace SELService
                     {
                         while (result.Read())
                         {
-                            var ret = new EventView();
-                            ret.LineName = !result.IsDBNull(6) ? result.GetString(6) : !result.IsDBNull(7) ? result.GetString(7) : null;
-                            if (!string.IsNullOrEmpty(ret.LineName))
-                            {
-                                ret.LineName = ret.LineName.Replace(System.Environment.NewLine, "");
-                            }
-                            ret.StationName = result.GetString(0).Replace(System.Environment.NewLine, "");
-                            ret.DeviceName = result.GetString(9).Replace(System.Environment.NewLine, "");
-
-                            ret.StartTime = result.GetDateTime(1);
-                            ret.Id = result.GetInt32(2);
-                            if (!result.IsDBNull(8))
-                            {
-                                ret.Target = result.GetString(8);
-                            }
-                            if (!result.IsDBNull(5))
-                            {
-                                //LineId IS NOT NULL GET Distance_2
-                                if (!result.IsDBNull(4))
-                                {
-                                    ret.Length = result.GetDouble(4);
-                                }
-                                if (!result.IsDBNull(3))
-                                {
-                                    ret.LengthB = result.GetDouble(3);
-                                }
-                            }
-                            else
-                            {
-                                //LineId IS NULL GET Distance_1
-                                if (!result.IsDBNull(3))
-                                {
-                                    ret.Length = result.GetDouble(3);
-                                }
-                                if (!result.IsDBNull(4))
-                                {
-                                    ret.LengthB = result.GetDouble(4);
-                                }
-                            }
-
-                            if (!result.IsDBNull(6))
-                            {
-                                if (!result.IsDBNull(10) && ret.StationName != result.GetString(10))
-                                {
-                                    ret.StationNameB = result.GetString(10);
-                                }
-                                if (!result.IsDBNull(11) && ret.StationName != result.GetString(11))
-                                {
-                                    ret.StationNameB = result.GetString(11);
-                                }
-                            }
-                            else
-                            {
-                                if (!result.IsDBNull(12) && ret.StationName != result.GetString(12))
-                                {
-                                    ret.StationNameB = result.GetString(12);
-                                }
-                                if (!result.IsDBNull(13) && ret.StationName != result.GetString(13))
-                                {
-                                    ret.StationNameB = result.GetString(13);
-                                }
-                            }
-
-                            rets.Add(ret);
+                            var qualitrolFail = new QualitrolFail();
+                            qualitrolFail.ResultID = result.GetInt64(0);
+                            qualitrolFail.CircuitName = result.GetString(1).ToString();
+                            qualitrolFail.ResultTimeStampLocal = result.GetDecimal(2);
+                            qualitrolFail.ResultTimeStampUS = result.GetDecimal(3);
+                            qualitrolFail.DeviceNameX = result.GetString(4).ToString();
+                            qualitrolFail.DeviceNameY = result.GetString(5).ToString();
+                            qualitrolFail.DTFX = result.GetDouble(6);
+                            qualitrolFail.DTFY = result.GetDouble(7);
+                            qualitrolFails.Add(qualitrolFail);
                         }
                     }
                 }
@@ -306,14 +285,14 @@ namespace SELService
             {
                 throw ex;
             }
-            return rets;
+            return qualitrolFails;
         }
 
         /// <summary>
         /// Read max id in file
         /// </summary>
         /// <returns></returns>
-        private int ReadMaxId()
+        private long ReadMaxId()
         {
             var maxId = 0;
             try
@@ -347,7 +326,7 @@ namespace SELService
         /// Write max id to file
         /// </summary>
         /// <param name="maxId"></param>
-        private void WriteMaxId(int maxId)
+        private void WriteMaxId(long maxId)
         {
             try
             {

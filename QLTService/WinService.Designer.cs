@@ -1,7 +1,7 @@
 ﻿
-namespace SELService
+namespace QLTService
 {
-    partial class SELService
+    partial class QLTService
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,9 +30,9 @@ namespace SELService
         private void InitializeComponent()
         {
             // 
-            // SELService
+            // QLTService
             // 
-            this.ServiceName = "SEL Service";
+            this.ServiceName = "QLT Service";
 
         }
 

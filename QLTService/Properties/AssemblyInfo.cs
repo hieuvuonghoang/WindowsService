@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SELService")]
+[assembly: AssemblyTitle("QLTService")]
 [assembly: AssemblyDescription("Read and send data fault result of system FL_SEL.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SV Tech")]
-[assembly: AssemblyProduct("SELService")]
+[assembly: AssemblyProduct("QLTService")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

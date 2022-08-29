@@ -5,15 +5,15 @@ using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SELService
+namespace QLTService
 {
-    public partial class SELService : ServiceBase
+    public partial class QLTService : ServiceBase
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly AppConfigs _appConfigs;
         private Timer _timer = null;
 
-        public SELService()
+        public QLTService()
         {
             InitializeComponent();
             try

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SELService
+namespace QLTService
 {
     public class EventView
     {
         /// <summary>
         /// ID sự cố
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
         /// <summary>
         /// Thời gian xảy ra sự cố
         /// </summary>

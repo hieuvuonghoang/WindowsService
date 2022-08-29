@@ -1,5 +1,5 @@
 ﻿
-namespace SELService
+namespace QLTService
 {
     partial class ProjectInstaller
     {

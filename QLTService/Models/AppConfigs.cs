@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SELService
+namespace QLTService
 {
     public class AppConfigs : ConfigurationSection
     {

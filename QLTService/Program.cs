@@ -6,7 +6,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SELService
+namespace QLTService
 {
     static class Program
     {
@@ -18,7 +18,7 @@ namespace SELService
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new SELService()
+                new QLTService()
             };
             ServiceBase.Run(ServicesToRun);
         }
