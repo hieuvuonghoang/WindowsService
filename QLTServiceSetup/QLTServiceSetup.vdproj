@@ -447,9 +447,9 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QLT Service"
-        "ProductCode" = "8:{9BBBB057-70F3-4E81-94C1-16FD055E7BA5}"
-        "PackageCode" = "8:{6AE558C2-BF7D-4F12-8EC2-12498B4E4016}"
-        "UpgradeCode" = "8:{B1E146F6-FC52-4599-9B38-FF121DC9C795}"
+        "ProductCode" = "8:{E684C157-B13F-4A1A-9057-6D72C37293EC}"
+        "PackageCode" = "8:{BE56199C-831A-49F6-A0AC-AD719BD65374}"
+        "UpgradeCode" = "8:{DEFBA15E-3EB6-49F1-B700-62D8C30E95AC}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -997,7 +997,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E5C9CDAA6DBD4D6696BE476D2FB044A9"
             {
-            "SourcePath" = "8:..\\QLTService\\obj\\Debug\\QLTService.exe"
+            "SourcePath" = "8:..\\QLTService\\obj\\Release\\QLTService.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_09792A163399467991906B98B17A4952"

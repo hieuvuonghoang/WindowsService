@@ -41,9 +41,9 @@ namespace QLTService
             // 
             // serviceInstaller
             // 
-            this.serviceInstaller.Description = "SEL Service";
-            this.serviceInstaller.DisplayName = "SEL Service";
-            this.serviceInstaller.ServiceName = "SEL Service";
+            this.serviceInstaller.Description = "QLT Service";
+            this.serviceInstaller.DisplayName = "QLT Service";
+            this.serviceInstaller.ServiceName = "QLT Service";
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
