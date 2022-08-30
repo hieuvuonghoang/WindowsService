@@ -5,15 +5,15 @@ using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SELService
+namespace KinkeiService
 {
-    public partial class SELService : ServiceBase
+    public partial class KinkeiService : ServiceBase
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly AppConfigs _appConfigs;
         private Timer _timer = null;
 
-        public SELService()
+        public KinkeiService()
         {
             InitializeComponent();
             try
@@ -34,7 +34,7 @@ namespace SELService
         {
             _logger.Info($"OnStart: {DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy")}");
             var worker = new Worker(_appConfigs);
-            _timer = new Timer(worker.Run, null, TimeSpan.Zero, TimeSpan.FromSeconds(_appConfigs.ServiceConfigs.RefreshTime));
+            _timer = new Timer(worker.RunAsync, null, TimeSpan.Zero, TimeSpan.FromSeconds(_appConfigs.ServiceConfigs.RefreshTime));
         }
 
         protected override void OnStop()

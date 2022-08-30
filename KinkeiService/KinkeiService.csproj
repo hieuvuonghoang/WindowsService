@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4A197495-6FFC-4416-80D3-1AB9C6B6C5AB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SELService</RootNamespace>
-    <AssemblyName>SELService</AssemblyName>
+    <RootNamespace>KinkeiService</RootNamespace>
+    <AssemblyName>KinkeiService</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -70,8 +70,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AppConfigs.cs" />
+    <Compile Include="Models\DeviceResults.cs" />
     <Compile Include="Models\EventView.cs" />
+    <Compile Include="Models\LineResults.cs" />
     <Compile Include="Models\RequestContent.cs" />
+    <Compile Include="Models\Root.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>

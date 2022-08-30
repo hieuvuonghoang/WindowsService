@@ -6,7 +6,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SELService
+namespace KinkeiService
 {
     static class Program
     {
@@ -18,7 +18,7 @@ namespace SELService
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new SELService()
+                new KinkeiService()
             };
             ServiceBase.Run(ServicesToRun);
         }

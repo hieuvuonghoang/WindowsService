@@ -1,5 +1,5 @@
 ﻿
-namespace SELService
+namespace KinkeiService
 {
     partial class ProjectInstaller
     {
@@ -41,9 +41,9 @@ namespace SELService
             // 
             // serviceInstaller
             // 
-            this.serviceInstaller.Description = "SEL Service";
-            this.serviceInstaller.DisplayName = "SEL Service";
-            this.serviceInstaller.ServiceName = "SEL Service";
+            this.serviceInstaller.Description = "Kinkei Service";
+            this.serviceInstaller.DisplayName = "Kinkei Service";
+            this.serviceInstaller.ServiceName = "Kinkei Service";
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

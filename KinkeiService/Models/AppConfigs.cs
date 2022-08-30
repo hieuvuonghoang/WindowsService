@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SELService
+namespace KinkeiService
 {
     public class AppConfigs : ConfigurationSection
     {
@@ -67,6 +67,18 @@ namespace SELService
             set
             {
                 value = (ServiceConfigs)this["ServiceConfigs"];
+            }
+        }
+        [ConfigurationProperty("KinkeiConfigs")]
+        public KinkeiConfigs KinkeiConfigs
+        {
+            get
+            {
+                return (KinkeiConfigs)this["KinkeiConfigs"];
+            }
+            set
+            {
+                value = (KinkeiConfigs)this["KinkeiConfigs"];
             }
         }
     }
@@ -183,6 +195,46 @@ namespace SELService
             set
             {
                 value = (int)this["RefreshTime"];
+            }
+        }
+    }
+
+    public class KinkeiConfigs : ConfigurationElement
+    {
+        [ConfigurationProperty("Results", IsRequired = true)]
+        public string Results
+        {
+            get
+            {
+                return (string)this["Results"];
+            }
+            set
+            {
+                value = (string)this["Results"];
+            }
+        }
+        [ConfigurationProperty("Lines", IsRequired = true)]
+        public string Lines
+        {
+            get
+            {
+                return (string)this["Lines"];
+            }
+            set
+            {
+                value = (string)this["Lines"];
+            }
+        }
+        [ConfigurationProperty("Devices", IsRequired = true)]
+        public string Devices
+        {
+            get
+            {
+                return (string)this["Devices"];
+            }
+            set
+            {
+                value = (string)this["Devices"];
             }
         }
     }

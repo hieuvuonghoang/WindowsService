@@ -1,7 +1,7 @@
 ﻿
-namespace SELService
+namespace KinkeiService
 {
-    partial class SELService
+    partial class KinkeiService
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,9 +30,9 @@ namespace SELService
         private void InitializeComponent()
         {
             // 
-            // SELService
+            // KinkeiService
             // 
-            this.ServiceName = "SEL Service";
+            this.ServiceName = "Kinkei Service";
 
         }
 

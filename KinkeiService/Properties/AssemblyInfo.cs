@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SELService")]
+[assembly: AssemblyTitle("KinkeiService")]
 [assembly: AssemblyDescription("Read and send data fault result of system FL_SEL.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SV Tech")]
-[assembly: AssemblyProduct("SELService")]
+[assembly: AssemblyProduct("KinkeiService")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4a197495-6ffc-4416-80d3-1ab9c6b6c5ab")]
+[assembly: Guid("335d4359-4da0-435f-bd29-0f0768ebaecb")]
 
 // Version information for an assembly consists of the following four values:
 //
