@@ -88,11 +88,12 @@ namespace KinkeiService
                     ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
                     var request = new HttpRequestMessage(HttpMethod.Get, _appConfigs.KinkeiConfigs.Lines);
                     var response = await client.SendAsync(request);
-                    if(response.IsSuccessStatusCode)
+                    if (response.IsSuccessStatusCode)
                     {
                         var root = JsonConvert.DeserializeObject<LineResultFL>(await response.Content.ReadAsStringAsync());
                         return root;
-                    } else
+                    }
+                    else
                     {
                         throw new Exception($"Lỗi khi gọi tới API: {_appConfigs.KinkeiConfigs.Lines}.");
                     }
@@ -243,6 +244,7 @@ namespace KinkeiService
                 var dir = _appConfigs.FileConfigs.Dir;
                 var fileName = _appConfigs.FileConfigs.FileName;
                 var strMaxIdFileTempPath = Path.Combine(Path.GetTempPath(), dir, fileName);
+                _logger.Info(strMaxIdFileTempPath);
                 var str = "0";
                 if (File.Exists(strMaxIdFileTempPath))
                 {
@@ -296,18 +298,23 @@ namespace KinkeiService
         /// <returns></returns>
         private void SendDatas(RequestContent requestContent)
         {
-            var content = new StringContent(JsonConvert.SerializeObject(requestContent), Encoding.UTF8, "application/json");
-            var request = new HttpRequestMessage(HttpMethod.Post, _appConfigs.WebServiceConfigs.URI)
+            try
             {
-                Content = content
-            };
-            using (var client = new HttpClient())
-            {
+                var content = new StringContent(JsonConvert.SerializeObject(requestContent), Encoding.UTF8, "application/json");
+                var request = new HttpRequestMessage(HttpMethod.Post, _appConfigs.WebServiceConfigs.URI)
+                {
+                    Content = content
+                };
+                var client = new HttpClient();
                 ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
                 Task.Run(() =>
                 {
                     client.SendAsync(request);
                 });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }
