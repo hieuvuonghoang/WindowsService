@@ -358,14 +358,12 @@ namespace QLTService
             {
                 Content = content
             };
-            using (var client = new HttpClient())
+            var client = new HttpClient();
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            Task.Run(() =>
             {
-                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-                Task.Run(() =>
-                {
-                    client.SendAsync(request);
-                });
-            }
+                client.SendAsync(request);
+            });
         }
     }
 }
