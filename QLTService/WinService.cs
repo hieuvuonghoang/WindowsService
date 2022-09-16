@@ -27,6 +27,7 @@ namespace QLTService
             catch (Exception ex)
             {
                 _logger.Error(ex.ToString(), ex);
+                throw ex;
             }
         }
 
