@@ -256,7 +256,6 @@ namespace QLTService
             var qualitrolFails = new List<QualitrolFail>();
             try
             {
-
                 var nSkip = (pageNum - 1) * nRowInPage;
                 var nTake = nRowInPage;
                 using (var command = new SqlCommand(string.Format(_querySQLGetDataForPage, maxId, maxIdInResult, nSkip, nTake), connection))
