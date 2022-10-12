@@ -1,34 +1,39 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
+﻿
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using System;
 
-namespace Microsoft.Extensions.Logging
+namespace TestAutoRemoveCuSet
 {
-    /// <summary>
-    /// Extension methods for setting up logging services in an <see cref="ILoggingBuilder" />.
-    /// </summary>
-    public static class LoggingBuilderExtensions
+    public class CusLogger : ILoggerProvider
     {
-        public static ILoggingBuilder SetMinimumLevel(this ILoggingBuilder builder, LogLevel level)
+
+        public ILogger CreateLogger(string categoryName)
         {
-            //builder.Services.Add(ServiceDescriptor.Singleton<IConfigureOptions<LoggerFilterOptions>>(
-            //    new DefaultLoggerLevelConfigureOptions(level)));
-            return builder;
+            throw new System.NotImplementedException();
         }
 
-        public static ILoggingBuilder AddProvider(this ILoggingBuilder builder, ILoggerProvider provider)
+        public void Dispose()
         {
-            builder.Services.AddSingleton(provider);
-            return builder;
+            throw new System.NotImplementedException();
+        }
+    }
+
+    public class Logger : ILogger
+    {
+        public IDisposable BeginScope<TState>(TState state)
+        {
+            throw new NotImplementedException();
         }
 
-        public static ILoggingBuilder ClearProviders(this ILoggingBuilder builder)
+        public bool IsEnabled(LogLevel logLevel)
         {
-            builder.Services.RemoveAll<ILoggerProvider>();
-            return builder;
+            throw new NotImplementedException();
+        }
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

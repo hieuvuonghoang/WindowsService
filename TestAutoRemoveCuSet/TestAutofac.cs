@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace TestAutoRemoveCuSet
 {
@@ -35,7 +36,9 @@ namespace TestAutoRemoveCuSet
                 client.BaseAddress = new Uri(httpClientBaseUriPortal);
             });
             _serviceCollection.Configure<AppConfigs>(configuration.GetSection(nameof(AppConfigs)));
-            _serviceCollection.AddLogging((service) => );
+            _serviceCollection.AddLogging((loggingBuilder) =>
+            {
+            });
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.Populate(_serviceCollection);
