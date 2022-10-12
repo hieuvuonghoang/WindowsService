@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net.Http;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using AutoRemoveCuSet.Services;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoRemoveCuSet;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using System;
+using System.IO;
+using System.Net.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using AutoRemoveCuSet.Services;
+using AutoRemoveCuSet.CusLoggingProvider;
+using System.ServiceProcess;
 
 namespace AutoRemoveCuSet
 {
@@ -20,14 +22,27 @@ namespace AutoRemoveCuSet
 
         public static void Register()
         {
-            #region "HttpClientFactory"
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddHttpClient("Portal", (client) =>
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true)
+                .Build() as IConfiguration;
+
+            var httpClientNamePortal = configuration.GetSection(nameof(AppConfigs)).GetSection(nameof(Portals)).GetSection("HttpClientName").Value;
+            var httpClientBaseUriPortal = configuration.GetSection(nameof(AppConfigs)).GetSection(nameof(Portals)).GetSection("HttpClientBaseUri").Value;
+
+            var _serviceCollection = new ServiceCollection();
+            _serviceCollection.AddHttpClient(httpClientNamePortal, (client) =>
             {
-                client.BaseAddress = new Uri("https://gis.npt.com.vn");
+                client.BaseAddress = new Uri(httpClientBaseUriPortal);
             });
-            _containerBuilder.Populate(serviceCollection);
-            #endregion
+            _serviceCollection.Configure<AppConfigs>(configuration.GetSection(nameof(AppConfigs)));
+            _serviceCollection.AddLogging((loggingBuilder) =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddProvider(new NLogLoggerProvider());
+            });
+
+            _containerBuilder.Populate(_serviceCollection);
 
             _containerBuilder.RegisterType<PortalServices>().As<IPortalServices>().SingleInstance();
             

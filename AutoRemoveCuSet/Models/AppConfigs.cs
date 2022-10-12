@@ -9,7 +9,7 @@ namespace AutoRemoveCuSet
 {
     public class AppConfigs
     {
-        public PortalServices PortalServices
+        public ServicePortals ServicePortals
         {
             get; set;
         }
@@ -24,7 +24,7 @@ namespace AutoRemoveCuSet
         public string HttpClientBaseUri { get; set; }
     }
 
-    public class PortalServices
+    public class ServicePortals
     {
         public string CuSet1Ngay
         {

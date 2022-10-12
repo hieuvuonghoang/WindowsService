@@ -1,21 +1,19 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoRemoveCuSet;
+using AutoRemoveCuSet.CusLoggingProvider;
+using AutoRemoveCuSet.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Net.Http;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace TestAutoRemoveCuSet
+namespace TestAutoRemoveCuSet.TestPortalServices
 {
     [TestClass]
-    public class TestAutofac
+    public class TestPortalServices
     {
         private IContainer _container;
 
@@ -36,34 +34,25 @@ namespace TestAutoRemoveCuSet
                 client.BaseAddress = new Uri(httpClientBaseUriPortal);
             });
             _serviceCollection.Configure<AppConfigs>(configuration.GetSection(nameof(AppConfigs)));
-            _serviceCollection.AddLogging((loggingBuilder) =>
+            _serviceCollection.AddLogging((configure) =>
             {
+                configure.ClearProviders();
+                configure.AddProvider(new NLogLoggerProvider());
             });
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.Populate(_serviceCollection);
 
+            containerBuilder.RegisterType<PortalServices>().As<IPortalServices>().SingleInstance();
+
             _container = containerBuilder.Build();
         }
 
         [TestMethod]
-        public void TestOptions()
+        public void TestLogger()
         {
-            var appConfig = _container.Resolve<IOptions<AppConfigs>>().Value;
-            var expect = "server/rest/services/CuSet_1Ngay_IUD/FeatureServer/0/deleteFeatures";
-            var actual = appConfig.ServicePortals.CuSet1Ngay;
-            Assert.IsTrue(expect == actual);
-        }
-
-        [TestMethod]
-        public void TestResolveHttpClient()
-        {
-            var appConfig = _container.Resolve<IOptions<AppConfigs>>().Value;
-            var httpClientFactory = _container.Resolve<IHttpClientFactory>();
-            var httpClient = httpClientFactory.CreateClient(appConfig.Portals.HttpClientName);
-            var expect = new Uri(appConfig.Portals.HttpClientBaseUri);
-            Assert.IsTrue(expect == httpClient.BaseAddress);
-
+            var portalServices = _container.Resolve<IPortalServices>();
+            portalServices.TestLogger();
         }
     }
 }

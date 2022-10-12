@@ -8,6 +8,6 @@ namespace AutoRemoveCuSet.Services
 {
     public interface IPortalServices
     {
-        
+        void TestLogger();
     }
 }
