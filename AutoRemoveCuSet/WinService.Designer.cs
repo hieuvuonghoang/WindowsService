@@ -1,5 +1,5 @@
 ﻿
-namespace WindowsService
+namespace AutoRemoveCuSet
 {
     partial class WinService
     {

@@ -1,5 +1,5 @@
 ﻿
-namespace WindowsService
+namespace AutoRemoveCuSet
 {
     partial class ProjectInstaller
     {
@@ -41,9 +41,9 @@ namespace WindowsService
             // 
             // serviceInstaller
             // 
-            this.serviceInstaller.Description = "WinService";
-            this.serviceInstaller.DisplayName = "Win Service";
-            this.serviceInstaller.ServiceName = "WinService";
+            this.serviceInstaller.Description = "Auto Remove Cu Set";
+            this.serviceInstaller.DisplayName = "Auto Remove Cu Set";
+            this.serviceInstaller.ServiceName = "AutoRemoveCuSet";
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
