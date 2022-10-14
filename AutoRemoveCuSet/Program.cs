@@ -23,7 +23,6 @@ namespace AutoRemoveCuSet
         public static void Register()
         {
             var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", true, true)
                 .Build() as IConfiguration;
 
@@ -60,17 +59,24 @@ namespace AutoRemoveCuSet
 
     static class Program
     {
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main()
         {
+
             Config.Register();
+
+            var winService = new WinService(
+                Config.Container.Resolve<ILogger<WinService>>(), 
+                Config.Container.Resolve<IOptions<AppConfigs>>(),
+                Config.Container.Resolve<IPortalServices>());
 
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new WinService()
+                winService
             };
             ServiceBase.Run(ServicesToRun);
         }

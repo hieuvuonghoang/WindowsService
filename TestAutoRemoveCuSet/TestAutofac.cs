@@ -11,6 +11,8 @@ using System.IO;
 using System.Net.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Autofac.Core;
+using AutoRemoveCuSet.Services;
 
 namespace TestAutoRemoveCuSet
 {
@@ -42,6 +44,7 @@ namespace TestAutoRemoveCuSet
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.Populate(_serviceCollection);
+            containerBuilder.RegisterType<PortalServices>().As<IPortalServices>().SingleInstance();
 
             _container = containerBuilder.Build();
         }
@@ -64,6 +67,16 @@ namespace TestAutoRemoveCuSet
             var expect = new Uri(appConfig.Portals.HttpClientBaseUri);
             Assert.IsTrue(expect == httpClient.BaseAddress);
 
+        }
+
+        [TestMethod]
+        public void TestResolveWindowService()
+        {
+            var windowService = new WinService(
+                _container.Resolve<ILogger<WinService>>(), 
+                _container.Resolve<IOptions<AppConfigs>>(),
+                _container.Resolve<IPortalServices>());
+            windowService.ScheduleService();
         }
     }
 }

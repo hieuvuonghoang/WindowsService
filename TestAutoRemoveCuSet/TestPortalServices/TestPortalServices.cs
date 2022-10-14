@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace TestAutoRemoveCuSet.TestPortalServices
 {
@@ -49,10 +50,20 @@ namespace TestAutoRemoveCuSet.TestPortalServices
         }
 
         [TestMethod]
-        public void TestLogger()
+        public async Task TestGenerateTokenAsync()
         {
             var portalServices = _container.Resolve<IPortalServices>();
-            portalServices.TestLogger();
+            var accessToken = await portalServices.GeneratePortalTokeAsync();
+            Assert.IsNotNull(accessToken);
+        }
+
+        [TestMethod]
+        public async Task TestRemoveFeatureCuSet()
+        {
+            var portalServices = _container.Resolve<IPortalServices>();
+            var thoiGianCuSet = new DateTime(2022, 10, 12, 06, 59, 59);
+            var accessToken = await portalServices.GeneratePortalTokeAsync();
+            await portalServices.RemoveFeatureCuSet(AutoRemoveCuSet.Models.CuSetType.CuSet1Ngay, thoiGianCuSet, accessToken);
         }
     }
 }
